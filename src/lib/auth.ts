@@ -16,6 +16,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  fetchOptions: { credentials: 'include' },
   socialProviders: {
     google: {
       prompt: 'select_account',
