@@ -10,6 +10,9 @@ export const auth = betterAuth({
     sessionToken: { sameSite: 'none', secure: true },
     csrfToken: { sameSite: 'none', secure: true },
   },
+  database: prismaAdapter(prisma, {
+    provider: 'postgresql',
+  }),
   emailAndPassword: {
     enabled: true,
   },
@@ -19,12 +22,15 @@ export const auth = betterAuth({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
-    facebook: {
-      clientId: process.env.FACEBOOK_CLIENT_ID as string,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
+    // facebook: {
+    //   clientId: process.env.FACEBOOK_CLIENT_ID as string,
+    //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
+    // },
+  },
+  trustedOrigins: [process.env.FRONTEND_URL as string, 'http://localhost:5173'],
+  user: {
+    additionalFields: {
+      role: { type: 'string', input: true, defaultValue: 'PENGGUNA' },
     },
   },
-  database: prismaAdapter(prisma, {
-    provider: 'postgresql',
-  }),
 });
