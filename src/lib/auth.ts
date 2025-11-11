@@ -24,7 +24,10 @@ export const auth = betterAuth({
     disableSessionRefresh: false,
     cookieCache: { enabled: true, maxAge: 60 },
     cookie: {
-      name: 'better-auth.session',
+      name:
+        (process.env.NODE_ENV as string) === 'production'
+          ? '__Secure-better-auth.session'
+          : 'better-auth.session',
       httpOnly: true,
       path: '/',
       sameSite:
