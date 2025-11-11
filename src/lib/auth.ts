@@ -18,7 +18,22 @@ export const auth = betterAuth({
   },
   fetchOptions: { credentials: 'include' },
   session: {
-    expiresIn: 60 * 60 * 24 * 30, // 30 days
+    secret: process.env.BETTER_AUTH_SECRET as string,
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24,
+    disableSessionRefresh: false,
+    cookieCache: { enabled: true, maxAge: 60 },
+    cookie: {
+      name: 'better-auth.session',
+      httpOnly: true,
+      path: '/',
+      sameSite:
+        (process.env.NODE_ENV as string) === 'production' ? 'none' : 'lax',
+      secure: (process.env.NODE_ENV as string) === 'production',
+      domain: (process.env.BASE_DOMAIN as string)
+        ? `.${process.env.BASE_DOMAIN as string}`
+        : undefined,
+    },
   },
   socialProviders: {
     google: {
