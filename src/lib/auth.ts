@@ -28,7 +28,6 @@ export const auth = betterAuth({
       sameSite:
         (process.env.NODE_ENV as string) === 'production' ? 'none' : 'lax',
       secure: (process.env.NODE_ENV as string) === 'production',
-      domain: process.env.FRONTEND_DOMAIN as string,
     },
   },
   socialProviders: {
